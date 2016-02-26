@@ -12,10 +12,14 @@ Run `bundle install` then run the `keyboard_macros` script.
 ### Customize
 
 Add instance methods to the `CommandParser`
-class in `keyboard_macros`. Add a `macro => method` mapping to
+class in `keyboard_macros`.
+
+When adding a macro, also add a `macro => method` mapping to
 the `CommandParse::MacroMethodMappings` constant.
 
-Note that you may have to replace the `/dev/ttyS4/` port argument
+### Notes
+
+You may have to replace the `/dev/ttyS4/` port argument
 in `keyboard_macros`. To find your serial port, run the
 `dmesg | grep tty` command.
 
