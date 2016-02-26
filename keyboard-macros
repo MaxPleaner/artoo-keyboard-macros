@@ -1,19 +1,26 @@
 #!/usr/bin/env ruby
 
-require 'artoo'
-require 'active_support/all'
-require 'colored'
+# ----------------------
+# Artoo keyboard-macros
+# http://github.com/maxpleaner/keyboard-macros
+# ----------------------
 
-# Get verbose Artoo errors
+require 'artoo'              # hardware connection gem
+require 'active_support/all' # ruby language extensions
+require 'colored'            # terminal output coloring
+
+# More concise artoo errors
 Celluloid.task_class = Celluloid::TaskThread
 
 # Overwrite nil.to_sym to return :nil instead of raising NoMethodError
 # This is useful with Object#try
 class NilClass; def to_sym; :nil; end; end;
 
-connection :keyboard, adaptor: :keyboard, port: '/dev/ttyS4'
+# Connect to devices with Artoo
+connection :keyboard, adaptor: :keyboard, port: 'isa0060/serio0/input0'
 device :keyboard, driver: :keyboard, connection: :keyboard
 
+# Artoo server instructions
 work do
   ParserInstance = CommandParser.new
   MaxPhraseLength = 30
