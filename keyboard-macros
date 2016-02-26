@@ -1,17 +1,47 @@
 #!/usr/bin/env ruby
 
 require 'artoo'
+require 'active_support/all'
+require 'colored'
+
+# Get verbose Artoo errors
+Celluloid.task_class = Celluloid::TaskThread
+
+# Overwrite nil.to_sym to return :nil instead of raising NoMethodError
+# This is useful with Object#try
+class NilClass; def to_sym; :nil; end; end;
 
 connection :keyboard, adaptor: :keyboard, port: '/dev/ttyS4'
 device :keyboard, driver: :keyboard, connection: :keyboard
 
 work do
+  ParserInstance = CommandParser.new
+  MaxPhraseLength = 30
+  CurrentPhrase = ""
   on keyboard, :key => :keypress
 end
 
 def keypress(sender, key)
-  puts key
+  key = ' ' if key == 'space'
+  (CurrentPhrase[0] = '') unless CurrentPhrase.length < MaxPhraseLength
+  CurrentPhrase << key
+  matching_method = CommandParser::MacroMethodMappings.select {
+    |macro_name, result_cmd|
+    CurrentPhrase.include?(macro_name) &&\
+    CurrentPhrase.split(macro_name)[-1].blank? # is match at EOL?
+  }.values.first
+  puts matching_method.to_s.red
+  puts CurrentPhrase.green
+  ParserInstance.try(matching_method.to_sym)
 end
 
 class CommandParser
+  MacroMethodMappings = {
+    "hello world" => "hello_world"
+  }
+  def initialize(options={})
+  end
+  def hello_world
+    `chromium-browser http://artoo.io`
+  end
 end
