@@ -8,8 +8,8 @@ keystrokes are captured when the script-runner terminal is selected.
 When certain pre-registered strings are typed, custom events happen.
 
 In the quest for a _global_ keyboard-listener (macro creator),
-I redid this project using the `evtest` linux library. See the
-linux-keyboard-macros project [here](https://github.com/maxpleaner/linux-keyboard-macros)
+I redid this project using the `evtest` linux library. [See the
+linux-keyboard-macros project here](https://github.com/maxpleaner/linux-keyboard-macros)
 
 ### Setup
 
