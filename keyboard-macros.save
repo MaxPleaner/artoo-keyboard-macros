@@ -16,11 +16,14 @@ Celluloid.task_class = Celluloid::TaskThread
 # This is useful with Object#try
 class NilClass; def to_sym; :nil; end; end;
 
-# connection :keyboard, adaptor: :keyboard, port: '/devices/platform/i8042/serio0/input/input3'
-# connection :keyboard, adaptor: :keyboard, port: '/dev/input/event3'
-# connection :keyboard, adaptor: :keyboard, port: ''
-connection :keyboard, adaptor: :keyboard, port: '/dev/input/event3'
-device :keyboard, driver: :keyboard, connection: :keyboard, port: '/dev/input/event3'
+# Connect to devices with Artoo
+With Artoo, the keyboard port is connected to like this:
+
+    connection :keyboard, adaptor: :keyboard, port: '/dev/tty/S4'
+    device :keyboard, driver: :keyboard, connection: :keyboard
+
+#connection :keyboard, adaptor: :keyboard, port: 'isa0060/serio0/input0'
+device :keyboard, driver: :keyboard, connection: :keyboard
 
 # Artoo server instructions
 work do

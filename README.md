@@ -3,9 +3,13 @@
 Keyboard macros, made with [artoo-keyboard](http://artoo.io/documentation/platforms/keyboard/)
 
 Artoo establishes listeners to the keyboard device. As a result,
-keystrokes are captured globally, not just in the terminal stdin.
+keystrokes are captured when the script-runner terminal is selected.
 
 When certain pre-registered strings are typed, custom events happen.
+
+In the quest for a _global_ keyboard-listener (macro creator),
+I redid this project using the `evtest` linux library. See the
+linux-keyboard-macros project [here](https://github.com/maxpleaner/linux-keyboard-macros)
 
 ### Setup
 
@@ -23,10 +27,6 @@ When adding a macro, also add a `macro => method` mapping to
 the `CommandParse::MacroMethodMappings` constant.
 
 ### Notes
-
-You may have to replace the `/dev/ttyS4/` port argument
-in `keyboard_macros`. To find your serial port, run the
-`dmesg | grep tty` command.
 
 Quitting the program can be a little annoying,
 just spam `control c` until the bash prompt returns. 
